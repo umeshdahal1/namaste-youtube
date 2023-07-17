@@ -27,7 +27,7 @@ const Head = () => {
                 className="w-1/2 border border-gray-400 p-2 rounded-l-full"
                 type="text"/>
                 <button 
-                className=" border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100 ">🔍</button>
+                className=" border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100 ">Search</button>
             </div>
             <div className="col-span-1">
                 <img className="h-8" alt="user" src="https://cdn-icons-png.flaticon.com/512/666/666201.png"/>
