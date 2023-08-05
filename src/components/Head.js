@@ -29,7 +29,9 @@ const Head = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [searchQuery]);
+  },
+  //  [searchQuery]
+   );
 
   const getSearchSuggestions = async () => {
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
@@ -67,7 +69,7 @@ const Head = () => {
         </a>
       </div>
       <div className="col-span-10 px-10">
-        <div>
+        <div className=" flex items-center">
           <input
             className="w-1/2 border border-gray-400 p-2 rounded-l-full"
             type="text"
