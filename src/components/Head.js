@@ -30,7 +30,7 @@ const Head = () => {
       clearTimeout(timer);
     };
   },
-  //  [searchQuery]
+   [searchQuery]
    );
 
   const getSearchSuggestions = async () => {
