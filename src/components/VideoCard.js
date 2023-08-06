@@ -10,7 +10,7 @@ const VideoCard = ({ info }) => {
         alt="thumbnail"
         src={thumbnails?.medium?.url}
       />
-      <ul>
+      <ul className=" w-50 h-50">
         <li className=" font-bold py-2 overflow-hidden container">{title}</li>
         <li>{channelTitle}</li>
         <li>{statistics.viewCount} Views </li>
