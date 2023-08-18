@@ -32,7 +32,10 @@ const WatchVideo = () => {
     useEffect(() => {
         dispatch(closeMenu());
         getVideoDetails();
-    }, [videoId]);
+    },
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+     [videoId]
+     );
 
     const getVideoDetails = async () => {
         const data = await Promise.all([fetch(YOUTUBE_VIDEO_WATCH_API + videoId), fetch(YOUTUBE_API)]);
