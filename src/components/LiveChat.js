@@ -1,67 +1,87 @@
-import React, { useEffect, useState } from "react";
-import ChatMessage from "./ChatMessage";
-import { addMessage } from "../utils/chatSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { generateRandomName, makeRandomMessage } from "../utils/helper";
+import React, { useEffect, useState } from 'react'
+import ChatMessage from './ChatMessage'
+import { useDispatch, useSelector } from 'react-redux';
+import { addChat } from '../redux/chatSlice';
+
 
 const LiveChat = () => {
-  const [LiveMessage, setLiveMessage] = useState("");
-  const dispatch = useDispatch();
 
-  const ChatMessages = useSelector((store) => store.chat.messages);
+    const [liveMessage, setLiveMessage] = useState("");
+    const [isShowChat, setIsShowChat] = useState(true);
 
+    const dispatch = useDispatch();
+
+    const chatMessages = useSelector((store) => store.chat.message);
+
+    let offset = 0;
+  const fetchData = async () => {
+    await fetch("https://pokeapi.co/api/v2/pokemon?limit=2&offset=" + offset)
+      .then((data) => data.json())
+      .then((response) => {
+  
+    dispatch(addChat({
+        name:response.results[0].name,
+        message : response.results[0].url
+    }))
+    
+    });
+    offset+=2;
+  };
   useEffect(() => {
-    const i = setInterval(() => {
-      dispatch(
-        addMessage({
-          name: generateRandomName(),
-          message: makeRandomMessage(20) + " Bye",
-        })
-      );
-    }, 2000);
-    return () => clearInterval(i);
-  },
-  //  []
-   );
-  return (
-    <>
-      <div className="w-full h-[500px] ml-2 p-2 border border-black bg-slate-100 rounded-lg overflow-y-scroll flex flex-col-reverse ">
-        <div>
-          {
-            // Disclaimer: Do not use indexes as key
-            ChatMessages.map((c, i) => (
-              <ChatMessage key={i} name={c.name} message={c.message} />
-            ))
-          }
-        </div>
-      </div>
+    const timer = setInterval( () => fetchData(),500)
+    return () => {
+        clearInterval(timer)
+    }
+  }, []);
 
-      <form
-        className="w-full p-2 ml-2 border border-black flex"
-        onSubmit={(e) => {
-          e.preventDefault();
-          // console.log("On form Submit", LiveMessage);
-          dispatch(
-            addMessage({
-              name: "Umesh Dahal",
-              message:  LiveMessage,
-            })
-          );
-          setLiveMessage ("");
-        }}
-      >
-        <input
-          className="w-96 px-2"
-          type="text"
-          value={LiveMessage}
-          onChange={(e) => {
-            setLiveMessage(e.target.value);
-          }}
-        />
-        <button className=" px-2 mx-2 bg-green-100">Send</button>
-      </form>
-    </>
-  );
-};
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(addChat({
+            name: 'Umesh Dahal',
+            message: liveMessage
+        }));
+        setLiveMessage('');
+    }
 
-export default LiveChat;
+
+
+   
+
+    return (
+        <>
+            {
+                !isShowChat ?
+                    (<div className=' w-[364px] h-[20px]  mx-3 text-center'><button onClick={() => setIsShowChat(true)} className='rounded-full hover:bg-gray-200 border py-1 w-full text-[14px]'>Show Chat</button></div>)
+                    :
+                    (
+                        <div className='w-[500px] h-[700px] border rounded-lg '>
+                            <div className='h-[40px] p-2 m-2' >Top Chat</div>
+                            <hr className="h-[1px] my-2 border-b-[1px] border-0" />
+                            <div className='h-[470px] overflow-y-scroll overflow-hidden  flex flex-col-reverse'>
+                                {
+                                    chatMessages.map((msg, i) => (
+                                        <ChatMessage key={i} name={msg.name} message={msg.message} />
+                                    ))
+                                }
+                            </div>
+                            <hr className="h-[1px] my-2 border-b-[1px] border-0" />
+                            <form onSubmit={(e) => handleSubmit(e)}>
+                                <div className='flex px-3 my-2'>
+                                    <img className='h-6 rounded-full' alt='user-icon' src='https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png' />
+                                    <div className='px-3 w-full'>
+                                        <div className='font-medium text-[13px] text-gray-500'>Umesh Dahal</div>
+                                        <input value={liveMessage} onChange={(e) => setLiveMessage(e.target.value)} maxLength="200" className='border-b-[1px] border-gray-400 h-7 outline-none text-[13px] w-full focus:border-blue-500 focus:border-b-[2px] pb-2' type='text' placeholder='Chat...' />
+                                        <div className='flex justify-end text-gray-500 text-[13px] mt-2'><span className='mr-3'>{liveMessage?.length}/200</span><button className='border rounded-full px-3'>Send</button></div>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr className="h-[1px] my-2 border-b-[1px] border-0" />
+                            <div className='mx-3 text-center'><button onClick={() => setIsShowChat(false)} className='hover:rounded-full hover:bg-gray-200 py-1 w-full text-[14px]'>Hide Chat</button></div>
+                        </div>
+                    )
+            }
+        </>
+    )
+}
+
+export default LiveChat

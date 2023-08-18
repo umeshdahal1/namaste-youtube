@@ -1,22 +1,25 @@
 import React from "react";
+import CommentsList from "./CommentsList";
 
 const commentsData = [
   {
-    name: "Umesh Dahal",
-    text: "Lorem ispsum dolor sit amet, consectetur adip",
+    name: "Tulasa Paudel",
+    text: "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium",
     replies: [
       {
         name: "Umesh Dahal",
-        text: "Lorem ispsum dolor sit amet, consectetur adip",
+        email: "umeshdahal@gmail.com",
+        text: "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et",
         replies: [
           {
-            name: "Umesh Dahal",
-            text: "Lorem ispsum dolor sit amet, consectetur adip",
+            name: "Kalpana Ghimire",
+            email: "kalpanaghimire@gmail.com",
+            text: "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et",
             replies: [
               {
-                name: "Umesh Dahal",
-                text: "Lorem ispsum dolor sit amet, consectetur adip",
-                replies: [],
+                name: "Chhabilal Regmi",
+                email: "chhabilalghimire@gmail.com",
+                text: "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et",
               },
             ],
           },
@@ -25,46 +28,29 @@ const commentsData = [
     ],
   },
   {
-    name: "Umesh Dahal",
-    text: "Lorem ispsum dolor sit amet, consectetur adip",
-    replies: [
-      {
-        name: "Umesh Dahal",
-        text: "Lorem ispsum dolor sit amet, consectetur adip",
-        replies: [
-          {
-            name: "Umesh Dahal",
-            text: "Lorem ispsum dolor sit amet, consectetur adip",
-            replies: [
-              {
-                name: "Umesh Dahal",
-                text: "Lorem ispsum dolor sit amet, consectetur adip",
-                replies: [],
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    name: "Sachida Pokhrel",
+    email: "sachidapokhrel@gmail.com",
+    text: "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et",
   },
   {
-    name: "Umesh Dahal",
-    text: "Lorem ispsum dolor sit amet, consectetur adip",
+    name: "Kiran Shakya",
+    email: "kiranshakya@gmail.com",
+    text: "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et",
+  },
+  {
+    name: "Utsav Adhikari",
+    email: "utsavadhikari@gmail.com",
+   text: "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et",
     replies: [
       {
-        name: "Umesh Dahal",
-        text: "Lorem ispsum dolor sit amet, consectetur adip",
+        name: "Nirmlada Mishra",
+        email: "bhaskarbhattrai@gmail.com",
+       text: "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et",
         replies: [
           {
-            name: "Umesh Dahal",
-            text: "Lorem ispsum dolor sit amet, consectetur adip",
-            replies: [
-              {
-                name: "Umesh Dahal",
-                text: "Lorem ispsum dolor sit amet, consectetur adip",
-                replies: [],
-              },
-            ],
+            name: "Shakti Oli",
+            email: "shaktioli@gmail.com",
+           text: "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et",
           },
         ],
       },
@@ -72,44 +58,10 @@ const commentsData = [
   },
 ];
 
-const Comment = ({ data }) => {
-  const { name, text,
-    //  replies
-     } = data;
-  return (
-    <div className=" flex shadow-lg bg-gray-100 p-2 rounded-lg my-2">
-      <img
-        className="w-8 h-8"
-        alt="user"
-        src="https://cdn-icons-png.flaticon.com/512/666/666201.png"
-      />
-      <div className="px-3 ">
-        <p className=" font-bold">{name}</p>
-        <p>{text}</p>
-      </div>
-    </div>
-  );
-};
-
-const CommentsList = ({ comments }) => {
-  // Disclaimer :Don't use indexes as keys
-  return comments.map((comment, index) => (
-    <div key={index}>
-      <Comment  data={comment} />
-      <div className=" pl-5 border border-l-black ml-5">
-        {/* <Comment key={index} data={comment} />
-        <Comment key={index} data={comment} />
-        <Comment key={index} data={comment} /> */}
-         <CommentsList comments={comment.replies}/>
-      </div>
-    </div>
-  ));
-};
-
 const CommentsContainer = () => {
   return (
     <div>
-      <h1 className=" text-2xl font-bold">Comments:</h1>
+      <h1 className="text-lg font-medium mb-2">Comments</h1>
       <CommentsList comments={commentsData} />
     </div>
   );
